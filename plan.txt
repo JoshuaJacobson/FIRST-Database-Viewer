@@ -1,0 +1,49 @@
+<interpreter version="2016_0.1.0">
+  <source type="CSDS">
+    <tag>compressed_souting_data_string</tag>
+    <data row="0" type="static"><position>1, 2</position></data>
+    <data row="1" type="static"><position>3, 4, 5, 6</position></data>
+    <data row="2" type="operation"><function>calculatePoints()</function></data>
+  </source>
+  <source>
+    <tag>spreadsheet</tag>
+  </source>
+  <compiler>
+    <data>
+      <row>0</row>
+      <id>match_number</id>
+      <name>Match Number</name>
+      <type>Integer</type>
+    </data>
+    <data>
+      <row>1</row>
+      <id>team_number</id>
+      <name>Team Number</name>
+      <type>Integer</type>
+    </data>
+    <data>
+      <row>1</row>
+      <id>total_points</id>
+      <name>Total Points</name>
+      <type>Double</type>
+    </data>
+  </compiler>
+</interpreter>
+
+<fdv version="1.0.0">
+  <source version="2016_0.1.0">
+    <entry>015086-0A110F018C02-This team sucked.</entry>
+  </source>
+</fdv>
+
+01    #Match Number
+5086  #Team number
+-     #Data and Events Separator
+0A11  #Event:
+  0A    #Timestamp in seconds. Shown in hexitricimal (36 bit states)
+  11    #Event code. Varies by year
+-     #Events and Comments separator
+foo   #Comments
+
+Compressed
+015086-0A110F018C02-This team sucked.
