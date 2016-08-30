@@ -8,7 +8,7 @@ public class JoEvent {
     public int matchNumber;
 
     public JoEvent(String[] data) throws Exception {
-        if(data.length < 94) {
+        if(data.length < 95) {
             throw new Exception("ERROR: DATA IS INVALID");
         }
 

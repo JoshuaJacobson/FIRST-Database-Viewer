@@ -16,13 +16,64 @@ public class Main {
     }
 
     public String[] eventsToJoEvent(String[] events) {
-        String[] r = new String[94];
+        String[] r = new String[95]; //String to return
 
-        r[0] = events[1];
-        r[1] = events[2];
-        Integer[] l = new Integer[94];
-        for(int i = 2; i < 94; i++) {
+        r[0] = events[1]; //Match Number
+        r[1] = events[2]; //Team Number
+
+        //Converts the data from the original String array to an Integer array for easier processing and readability.
+        Integer[] source = new Integer[events.length];
+        for (int n = 0; n < events.length; n++) {
+            source[n] = Integer.parseInt(events[n+10]);
+        }
+
+        //Creates a temporary Integer array to be used as a buffer that flows into r[] to be returned
+        Integer[] l = new Integer[95];
+        for(int i = 2; i < 95; i++) {
             l[i] = 0;
+        }
+
+        //Calculates where the to Teleop event is located
+        int split = 0;
+        for(int p = 0; p < source.length; p++) {
+            if (source[p] == 01) {
+                split = p;
+                break;
+            }
+        }
+
+        //Takes the events before the to Teleop event
+        Integer[] auto = new Integer[split];
+        for(int q = 0; q < split; q++) {
+            auto[q] = source[q];
+        }
+
+        //Takes the events after the to Teleop event
+        Integer[] tele = new Integer[split];
+        for(int w = split+1; w < source.length; w++) {
+            tele[w] = source[w];
+        }
+
+        for(int i = 0; i < auto.length; i++) {
+            switch(auto[i]) {
+                case 10: //High Goal
+                    l[2] = l[2] + 10; //Total Points
+                    l[3] = l[3] + 10; //Goal Points
+                    l[4]++; //High Goals
+                    l[5] = l[5] + 10; //High Points
+                    l[7] = ((l[4]) / (l[4] + l[6])); //High Ratio
+                    l[12] = l[12] + 1; //Autonomous Points
+                    l[13]++; //Auto High Goals
+                    l[14] = l[14] + 10; //Auto High Points
+                    l[16] = ((l[13]) / (l[13] + l[15])); //Auto High Ratio
+                    break;
+                case 11: //High Miss
+            }
+        }
+
+        //Converts the temporary Integer array to a the string array that will be returned
+        for(int s = 2; s < 95; s++) {
+            r[s] = l[s].toString();
         }
 
         return r;
