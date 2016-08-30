@@ -139,9 +139,51 @@ TOTAL POINTS
       LOW BAR
       LOW BAR PTS.
   BONUS POINTS
-  FOUR DEFENCES
-  CHALLENGE
-  SCALE
+    FOUR DEFENCES
+    CHALLENGE
   WIN
   LOSS
   TIE
+  COMMENTS
+
+  2016 CSDS Codes
+  00 - Game Begin
+  01 - To Teleop
+  02 - Game Win
+  03 - Game Tie
+  04 - Game Loss
+  05
+  06
+  07
+  08
+  09
+  10 - High Goal
+  11 - High Miss
+  12 - Low Goal
+  13 - Low Miss
+  14
+  15
+  16
+  17
+  18
+  19
+  20 - Portcullis
+  21 - Cheval De Frise
+  22 - Ramparts
+  23 - Moat
+  24 - Drawbridge
+  25 - Sally Port
+  26 - Rock Wall
+  27 - Rough Terrain
+  28 - Low Bar
+  29
+  30 - Outer Works Breached
+  31 - Challenge
+  32 - Scale
+  33
+  34
+  35
+  36
+  37
+  38
+  39
