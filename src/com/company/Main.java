@@ -54,20 +54,111 @@ public class Main {
             tele[w] = source[w];
         }
 
+        //Index values for data in the l[] array.
+        int match_number = 0;
+        int team_number = 1;
+        int total_points = 2;
+        int goal_points = 3;
+        int high_goals = 4;
+        int high_points = 5;
+        int high_misses = 6;
+        int high_ratio = 7;
+        int low_goals = 8;
+        int low_points = 9;
+        int low_misses = 10;
+        int low_ratio = 11;
+        int auto_goal_points = 12;
+        int auto_high_goals = 13;
+        int auto_high_points = 14;
+        int auto_high_misses = 15;
+        int auto_high_ratio = 16;
+        int auto_low_goals = 17;
+        int auto_low_points = 18;
+        int auto_low_misses = 19;
+        int auto_low_ratio = 20;
+        int teleop_goal_points = 21;
+        int teleop_high_points = 22;
+        int teleop_high_goals = 23;
+        int teleop_high_misses = 24;
+        int teleop_high_ratio = 25;
+        int teleop_low_points = 26;
+        int teleop_low_goals = 27;
+        int teleop_low_misses = 28;
+        int teleop_low_ratio = 29;
+
+        //Point values
+        int auto_defence_reach = 2;
+        int auto_defence_cross = 10;
+        int auto_low = 5;
+        int auto_high = 10;
+        int teleop_defence_cross = 5;
+        int teleop_low = 2;
+        int teleop_high = 5;
+        int challenge_points = 5;
+        int scaling = 15;
+        int outer_works_breach = 25;
+        int tower_capture = 25;
+
+        //Input values
+        int game_begin = 00;
+        int to_teleop = 01;
+        int win = 02;
+        int tie = 03;
+        int loss = 04;
+        int high_goal = 10;
+        int high_miss = 11;
+        int low_goal = 12;
+        int low_miss = 13;
+        int portcullis = 20;
+        int cheval_de_frise = 21;
+        int ramparts = 22;
+        int moat = 23;
+        int drawbridge = 24;
+        int sally_port = 25;
+        int rock_wall = 26;
+        int rough_terrain = 27;
+        int low_bar = 28;
+        int reach_defence = 29;
+        int breach = 30;
+        int challenge = 31;
+        int scale = 32;
+
+
         for(int i = 0; i < auto.length; i++) {
+            Boolean challenge_bool = false;
+
+            //If this code is not self-documenting, may God help your soul, I ain't commenting it.
+
             switch(auto[i]) {
                 case 10: //High Goal
-                    l[2] = l[2] + 10; //Total Points
-                    l[3] = l[3] + 10; //Goal Points
-                    l[4]++; //High Goals
-                    l[5] = l[5] + 10; //High Points
-                    l[7] = ((l[4]) / (l[4] + l[6])); //High Ratio
-                    l[12] = l[12] + 1; //Autonomous Points
-                    l[13]++; //Auto High Goals
-                    l[14] = l[14] + 10; //Auto High Points
-                    l[16] = ((l[13]) / (l[13] + l[15])); //Auto High Ratio
+                    l[total_points] = l[total_points] + auto_high;
+                    l[goal_points] = l[goal_points] + auto_high;
+                    l[high_goals]++;
+                    l[high_points] = l[high_points] + auto_high;
+                    l[high_ratio] = (l[high_goals]) / (l[high_goals] + l[high_misses]);
+                    l[auto_goal_points] = l[auto_goal_points] + auto_high;
+                    l[auto_high_goals]++;
+                    l[auto_high_points] = l[auto_high_points] + auto_high;
+                    l[auto_high_ratio] = (l[auto_high_goals]) / (l[auto_high_goals] + l[auto_high_misses]);
                     break;
                 case 11: //High Miss
+                    l[high_misses]++;
+                    l[high_ratio] = (l[high_goals]) / (l[high_goals] + l[high_misses]);
+                    l[auto_high_misses]++;
+                    l[auto_high_ratio] = (l[auto_high_goals]) / (l[auto_high_goals] + l[auto_high_misses]);
+                    break;
+                case 12: //Low Goal
+                    l[total_points] = l[total_points] + auto_low;
+                    l[goal_points] =l[goal_points] + auto_low;
+                    l[low_goals]++;
+                    l[low_points] = l[goal_points] + auto_low;
+                    l[low_ratio] = (l[low_goals]) / (l[low_goals + l[low_misses]]);
+                    l[auto_goal_points] = l[auto_goal_points] + auto_low;
+                    l[auto_low_goals]++;
+                    l[auto_goal_points] = l[auto_goal_points] + auto_low;
+                    l[auto_low_ratio] = (l[auto_low_goals]) / (l[auto_low_goals] + l[auto_low_misses]);
+                    break;
+
             }
         }
 

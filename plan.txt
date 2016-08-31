@@ -136,7 +136,7 @@ TOTAL POINTS
 5086  #Team number
 -     #Data and Events Separator
 0A11  #Event:
-  0A    #Timestamp in seconds. Shown in hexitricimal (36 bit states)
+  0A    #Timestamp in seconds. Shown in Hexatridecimal (radix-36)
   11    #Event code. Varies by year
 -     #Events and Comments separator
 foo   #Comments
