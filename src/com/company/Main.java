@@ -132,10 +132,12 @@ public class Main {
             switch(auto[i]) {
                 case 10: //High Goal
                     l[total_points] = l[total_points] + auto_high;
+
                     l[goal_points] = l[goal_points] + auto_high;
                     l[high_goals]++;
                     l[high_points] = l[high_points] + auto_high;
                     l[high_ratio] = (l[high_goals]) / (l[high_goals] + l[high_misses]);
+
                     l[auto_goal_points] = l[auto_goal_points] + auto_high;
                     l[auto_high_goals]++;
                     l[auto_high_points] = l[auto_high_points] + auto_high;
@@ -144,18 +146,28 @@ public class Main {
                 case 11: //High Miss
                     l[high_misses]++;
                     l[high_ratio] = (l[high_goals]) / (l[high_goals] + l[high_misses]);
+
                     l[auto_high_misses]++;
                     l[auto_high_ratio] = (l[auto_high_goals]) / (l[auto_high_goals] + l[auto_high_misses]);
                     break;
                 case 12: //Low Goal
                     l[total_points] = l[total_points] + auto_low;
+
                     l[goal_points] =l[goal_points] + auto_low;
                     l[low_goals]++;
                     l[low_points] = l[goal_points] + auto_low;
                     l[low_ratio] = (l[low_goals]) / (l[low_goals + l[low_misses]]);
+
                     l[auto_goal_points] = l[auto_goal_points] + auto_low;
                     l[auto_low_goals]++;
-                    l[auto_goal_points] = l[auto_goal_points] + auto_low;
+                    l[auto_low_points] = l[auto_low_points] + auto_low;
+                    l[auto_low_ratio] = (l[auto_low_goals]) / (l[auto_low_goals] + l[auto_low_misses]);
+                    break;
+                case 13: //Low Miss
+                    l[low_misses]++;
+                    l[low_ratio] = (l[low_goals]) / (l[low_goals] + l[low_misses]);
+
+                    l[auto_low_misses]++;
                     l[auto_low_ratio] = (l[auto_low_goals]) / (l[auto_low_goals] + l[auto_low_misses]);
                     break;
 
