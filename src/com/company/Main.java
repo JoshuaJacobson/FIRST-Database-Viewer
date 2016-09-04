@@ -85,6 +85,16 @@ public class Main {
         int teleop_low_goals = 27;
         int teleop_low_misses = 28;
         int teleop_low_ratio = 29;
+        int defence_points = 30;
+        int portcullis = 31;
+        int portcullis_points = 32;
+        int cheval_de_frise = 33;
+        int cheval_de_frise_points = 34;
+        int ramparts = 35;
+        int ramparts_points = 36;
+        int moat = 37;
+        int moat_points = 38;
+        int drawbridge = 39;
 
         //Point values
         int auto_defence_reach = 2;
@@ -98,30 +108,6 @@ public class Main {
         int scaling = 15;
         int outer_works_breach = 25;
         int tower_capture = 25;
-
-        //Input values
-        int game_begin = 00;
-        int to_teleop = 01;
-        int win = 02;
-        int tie = 03;
-        int loss = 04;
-        int high_goal = 10;
-        int high_miss = 11;
-        int low_goal = 12;
-        int low_miss = 13;
-        int portcullis = 20;
-        int cheval_de_frise = 21;
-        int ramparts = 22;
-        int moat = 23;
-        int drawbridge = 24;
-        int sally_port = 25;
-        int rock_wall = 26;
-        int rough_terrain = 27;
-        int low_bar = 28;
-        int reach_defence = 29;
-        int breach = 30;
-        int challenge = 31;
-        int scale = 32;
 
 
         for(int i = 0; i < auto.length; i++) {
@@ -170,6 +156,9 @@ public class Main {
                     l[auto_low_misses]++;
                     l[auto_low_ratio] = (l[auto_low_goals]) / (l[auto_low_goals] + l[auto_low_misses]);
                     break;
+                case 20:
+                    l[total_points] = l[total_points] + auto_defence_cross;
+
 
             }
         }
