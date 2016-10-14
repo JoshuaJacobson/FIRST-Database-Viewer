@@ -1,5 +1,8 @@
 package com.company;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by josh on 8/29/16.
  */
@@ -102,50 +105,40 @@ public class JoEvent {
     private boolean challenged = false;
 
     public JoEvent(String csds) throws Exception {
-        String[] i = new String[1000];
-        matchNumber = Integer.parseInt(csds.substring(0, 2)); //Match Number
-        teamNumber = Integer.parseInt(csds.substring(2,6));  //Team Number
-
-        String allianceorigin = csds.substring(6, 7);
-        if (allianceorigin == "R") {
-            alliance = "RED";
+        //Regex to parse CSDS strings
+        Pattern p = Pattern.compile("(\\w{2})(\\w{4})(\\w)(\\w)\\-(\\w+)\\-(.+)"); //Oh God I'm so sorry.
+        Matcher m = p.matcher(csds);
+        if (m.find()) {
+            this.matchNumber = Integer.parseInt(m.group(1));
+            this.teamNumber = Integer.parseInt(m.group(2));
+            gameStates(m.group(3), m.group(4));
+            System.out.println(m.group(5));
+            this.result = m.group(6);
         }
-        else if (allianceorigin == "B") {
-            alliance = "BLUE";
-        }
-
-        String preEvents = csds.substring(8, csds.length()); //Gets the string starting with the events
-        String events[] = preEvents.split("-", 2); //Splits into events and comments
-        comments = events[1]; //Comments
-        String eventsString = events[0]; //Events
-        int j;
-
-        for(j = 0; j<(eventsString.length()/4); j++) {
-            String pre = eventsString.substring((j*4) + 2, (j*4) + 4); //Gets the second two digits of every four to get event codes
-            i[j] = pre; //Event codes
-        }
-
-        //Trims the array to the minimum size.
-        String[] k = new String[10+j];
-        for (int m = 0; m < 10+j; m++) {
-            k[m] = i[m];
-        }
-
     }
 
-    void eventsToJoEvent(String[] events) {
+    void eventsToJoEvent(String events) {
 
-        //Converts the data from the original String array to an Integer array for easier processing and readability.
-        Integer[] source = new Integer[events.length];
-        for (int n = 0; n < events.length; n++) {
-            source[n] = Integer.parseInt(events[n+10]);
+        String regex = "";
+
+        int halfLength = events.length() / 2;
+        for (int i = 0; i < halfLength; i++) {
+            regex += "(\\w{2})";
+        }
+        Integer[] source = new Integer[halfLength];
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(events);
+        if (m.find()) {
+            for (int i = 0; i < halfLength; i++) {
+                source[i] = Integer.parseInt(m.group(i));
+            }
         }
 
         //Calculates where the to Teleop event is located
         int split = 0;
-        for(int p = 0; p < source.length; p++) {
-            if (source[p] == 01) {
-                split = p;
+        for(int i = 0; i < source.length; i++) {
+            if (source[i] == 01) {
+                split = i;
                 break;
             }
         }
@@ -349,14 +342,178 @@ public class JoEvent {
                     bonus_points += tower_capture;
                     capture = 1;
                     break;
-                case 40: //Win
-                    result = "WIN";
+                default:
                     break;
-                case 41: //Loss
-                    result = "LOSS";
+            }
+        }
+
+        for(int i = 0; i < tele.length; i++) {
+            Boolean challenge_bool = false;
+
+            //If this code is not self-documenting, may God help your soul, I ain't commenting it.
+
+            switch(tele[i]) {
+                case 10: //High Goal
+                    total_points += teleop_high;
+
+                    goal_points += teleop_high;
+                    high_goals++;
+                    high_points += teleop_high;
+
+                    teleop_goal_points += teleop_high;
+                    teleop_high_goals++;
+                    teleop_high_points += teleop_high;
+
+                    updateRatios();
                     break;
-                case 42: //Tie
-                    result = "TIE";
+                case 11: //High Miss
+                    high_misses++;
+                    teleop_high_misses++;
+
+                    updateRatios();
+                    break;
+                case 12: //Low Goal
+                    total_points += teleop_low;
+
+                    goal_points += teleop_low;
+                    low_goals++;
+                    low_points += teleop_low;
+
+                    teleop_goal_points += teleop_low;
+                    teleop_low_goals++;
+                    teleop_low_points += teleop_low;
+
+                    updateRatios();
+                    break;
+                case 13: //Low Miss
+                    low_misses++;
+                    teleop_low_misses++;
+
+                    updateRatios();
+                    break;
+                case 20: //Portcullis
+                    total_points += teleop_defence_cross;
+
+                    defence_points += teleop_defence_cross;
+                    portcullis++;
+                    portcullis_points += teleop_defence_cross;
+
+                    teleop_defence_points += teleop_defence_cross;
+                    teleop_portcullis++;
+                    teleop_portcullis_points += teleop_defence_cross;
+                    break;
+                case 21: //Cheval De Frise
+                    total_points += teleop_defence_cross;
+
+                    defence_points += teleop_defence_cross;
+                    cheval_de_frise++;
+                    cheval_de_frise_points += teleop_defence_cross;
+
+                    teleop_defence_points += teleop_defence_cross;
+                    teleop_cheval_de_frise++;
+                    teleop_cheval_de_frise_points += teleop_defence_cross;
+                    break;
+                case 22: //Ramparts
+                    total_points += teleop_defence_cross;
+
+                    defence_points += teleop_defence_cross;
+                    ramparts++;
+                    ramparts_points += teleop_defence_cross;
+
+                    teleop_defence_points += teleop_defence_cross;
+                    teleop_ramparts++;
+                    teleop_ramparts_points += teleop_defence_cross;
+                    break;
+                case 23: //Moat
+                    total_points += teleop_defence_cross;
+
+                    defence_points += teleop_defence_cross;
+                    moat++;
+                    moat_points += teleop_defence_cross;
+
+                    teleop_defence_points += teleop_defence_cross;
+                    teleop_moat++;
+                    teleop_moat_points += teleop_defence_cross;
+                    break;
+                case 24: //Drawbridge
+                    total_points += teleop_defence_cross;
+
+                    defence_points += teleop_defence_cross;
+                    drawbridge++;
+                    drawbridge_points += teleop_defence_cross;
+
+                    teleop_defence_points += teleop_defence_cross;
+                    teleop_drawbridge++;
+                    teleop_drawbridge_points += teleop_defence_cross;
+                    break;
+                case 25: //Sally Port
+                    total_points += teleop_defence_cross;
+
+                    defence_points += teleop_defence_cross;
+                    sally_port++;
+                    sally_port_points += teleop_defence_cross;
+
+                    teleop_defence_points += teleop_defence_cross;
+                    teleop_sally_port++;
+                    teleop_sally_port_points += teleop_defence_cross;
+                    break;
+                case 26: //Rock Wall
+                    total_points += teleop_defence_cross;
+
+                    defence_points += teleop_defence_cross;
+                    rock_wall++;
+                    rock_wall_points += teleop_defence_cross;
+
+                    teleop_defence_points += teleop_defence_cross;
+                    teleop_rock_wall++;
+                    teleop_rock_wall_points += teleop_defence_cross;
+                    break;
+                case 27: //Rough Terrain
+                    total_points += teleop_defence_cross;
+
+                    defence_points += teleop_defence_cross;
+                    rough_terrain++;
+                    rough_terrain_points += teleop_defence_cross;
+
+                    teleop_defence_points += teleop_defence_cross;
+                    teleop_rough_terrain++;
+                    teleop_rough_terrain_points += teleop_defence_cross;
+                    break;
+                case 28: //Low Bar
+                    total_points += teleop_defence_cross;
+
+                    defence_points += teleop_defence_cross;
+                    low_bar++;
+                    low_bar_points += teleop_defence_cross;
+
+                    teleop_defence_points += teleop_defence_cross;
+                    teleop_low_bar++;
+                    teleop_low_bar_points += teleop_defence_cross;
+                    break;
+                case 30: //Outer Works Breach
+                    total_points += outer_works_breach;
+                    bonus_points += outer_works_breach;
+                    breach = 1;
+                    break;
+                case 31: //Challenge
+                    challenged = true;
+                    total_points += challenge_points;
+                    bonus_points += challenge_points;
+                    challenge = challenge_points;
+                    break;
+                case 32: //Scale
+                    if (challenged = true) {
+                        total_points -= challenge_points;
+                        bonus_points -= challenge_points;
+                    }
+                    total_points += scaling;
+                    bonus_points += scaling;
+                    challenge = scaling;
+                    break;
+                case 33: //Capture
+                    total_points += tower_capture;
+                    bonus_points += tower_capture;
+                    capture = 1;
                     break;
                 default:
                     break;
@@ -376,4 +533,34 @@ public class JoEvent {
         teleop_low_ratio = (teleop_low_goals) / (teleop_low_goals + teleop_low_misses);
     }
 
+
+    private void gameStates(String alliance, String result) throws Exception {
+        if (alliance.equals("B")) {
+            this.alliance = "BLUE";
+        }
+        else if (alliance.equals("R")) {
+            this.alliance = "RED";
+        }
+        else {
+            throw new Exception("INVALID GAME STATE AT CHARACTER 6 (Zero Based csds system");
+        }
+
+        if (result.equals("W")) {
+            this.result = "WIN";
+        }
+        else if (result.equals("L")) {
+            this.result = "LOSS";
+        }
+        else if (result.equals("T")) {
+            this.result = "TIE";
+        }
+        else {
+            throw new Exception("INVALID GAME STATE AT CHARACTER 7 (Zero Based csds system");
+        }
+    }
+
+    private int length(int i) {
+        String s = String.valueOf(i);
+        return s.length();
+    }
 }

@@ -142,7 +142,6 @@ TOTAL POINTS
   11    #Event code. Varies by year
 -     #Events and Comments separator
 foo   #Comments
-
 Compressed
 015086-0A110F018C02-This team sucked.
 
@@ -192,3 +191,4 @@ DATA:
   37
   38
   39
+
